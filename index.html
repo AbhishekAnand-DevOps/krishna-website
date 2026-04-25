@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Realty | Premium Real Estate Platform</title>
+    <meta name="description" content="Find your dream home with Krishna Realty, the most premium real estate platform.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+
+
+    <style>
+        /* Hero Specific Styles */
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+            /* offset navbar */
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.8) 0%, rgba(10, 25, 47, 0.4) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 10;
+            width: 100%;
+            max-width: 900px;
+            padding: 0 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            color: #f8fafc;
+        }
+
+        /* Search Box */
+        .search-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            box-shadow: var(--glass-shadow);
+            text-align: left;
+        }
+
+        .search-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .search-tab {
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .search-tab.active {
+            color: var(--brand-primary);
+        }
+
+        .search-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--brand-primary);
+            border-radius: 3px 3px 0 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .search-fields {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .search-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .search-field label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .search-input {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            color: var(--text-primary);
+            width: 100%;
+        }
+
+        .search-btn {
+            height: 100%;
+            min-height: 54px;
+            padding: 0 2rem;
+            font-size: 1.125rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .search-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .search-btn {
+                height: 54px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== MAIN VIEW ==================== -->
+    <div id="main-view">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="container">
+                <a href="#" class="logo" onclick="showMainView(event)">
+                    <i class="fa-solid fa-home" style="color: var(--brand-primary);"></i>
+                    <span>Krishna</span>Realty
+                </a>
+
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="#" class="nav-link">Buy</a>
+                    <a href="#" class="nav-link">Rent</a>
+                    <a href="#" class="nav-link">Commercial</a>
+                    <a href="#" class="nav-link">Projects</a>
+                </div>
+
+                <div class="nav-actions">
+                    <button class="theme-toggle" id="theme-toggle-main" aria-label="Toggle Dark Mode">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button class="btn btn-secondary hover-float" onclick="showUserLogin(event)"
+                        style="border: none; background: transparent;">
+                        <i class="fa-solid fa-user" style="font-size: 1.125rem;"></i><span style="margin-left: 0.5rem;"
+                            class="hide-mobile">Login</span>
+                    </button>
+                    <button class="btn btn-primary open-post-modal hover-float">
+                        Post Property <span class="badge"
+                            style="background: rgba(255,255,255,0.2); font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 12px; margin-left: 4px;">Free</span>
+                    </button>
+                    <button class="mobile-menu-btn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="hero">
+            <img src="assets/hero_bg.png" alt="Luxury Real Estate" class="hero-bg animate-fade-in"
+                onerror="this.src='https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'">
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+                <h1 class="hero-title animate-slide-up">Discover Your Perfect Sanctuary</h1>
+                <p class="hero-subtitle animate-slide-up delay-100">Explore premium residential properties in prime
+                    locations.</p>
+
+                <div class="search-box animate-slide-up delay-200">
+                    <div class="search-tabs">
+                        <button class="search-tab active">Buy</button>
+                        <button class="search-tab">Rent</button>
+                        <button class="search-tab">Projects</button>
+                    </div>
+                    <form class="search-fields" onsubmit="event.preventDefault();">
+                        <div class="search-field">
+                            <label>Location</label>
+                            <div style="position: relative;">
+                                <i class="fa-solid fa-location-dot"
+                                    style="position: absolute; left: 1rem; top: 1.15rem; color: var(--text-muted);"></i>
+                                <input type="text" class="search-input" placeholder="Enter City, Locality, or Project"
+                                    style="padding-left: 2.5rem;">
+                            </div>
+                        </div>
+                        <div class="search-field">
+                            <label>Property Type</label>
+                            <select class="search-input">
+                                <option>All Residential</option>
+                                <option>Apartment</option>
+                                <option>Villa / House</option>
+                                <option>Penthouse</option>
+                                <option>Boys PG</option>
+                                <option>Girls PG</option>
+                                <option>Hotels</option>
+                            </select>
+                        </div>
+                        <div class="search-field">
+                            <label>Budget</label>
+                            <select class="search-input">
+                                <option>Any Budget</option>
+                                <option>₹50 Lac - ₹1 Cr</option>
+                                <option>₹1 Cr - ₹3 Cr</option>
+                                <option>₹3 Cr+</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary search-btn hover-float">
+                            <i class="fa-solid fa-magnifying-glass"></i> Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- Featured Properties -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title animate-slide-up">Featured Exclusives</h2>
+                <p class="section-subtitle animate-slide-up delay-100">Handpicked premium properties curated for you.
+                </p>
+
+                <div class="grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-8 stagger-children" id="featured-grid">
+                    <!-- Javascript will render properties here -->
+                </div>
+
+                <div class="flex justify-center" style="margin-top: 4rem;">
+                    <button class="btn btn-secondary hover-float animate-slide-up">
+                        View All Properties <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Post Property Banner -->
+        <section class="section"
+            style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+            <div class="container">
+                <div class="flex justify-between items-center md:grid-cols-1"
+                    style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(10, 25, 47, 0.05) 100%); padding: 4rem; border-radius: var(--radius-xl); border: 1px solid var(--glass-border);">
+                    <div>
+                        <h2 class="section-title" style="margin-bottom: 1rem;">Looking to Sell or Rent?</h2>
+                        <p class="section-subtitle" style="margin-bottom: 0; max-width: 500px;">Post your property on
+                            Krishna Realty and connect with thousands of premium buyers instantly. First listing is
+                            absolutely free.</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <button class="btn btn-primary open-post-modal hover-scale"
+                            style="padding: 1rem 2rem; font-size: 1.125rem;">
+                            Post Your Property Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col" style="flex: 2;">
+                        <a href="#" class="logo" style="margin-bottom: 1.5rem;" onclick="showMainView(event)">
+                            <i class="fa-solid fa-home" style="color: var(--brand-primary);"></i>
+                            <span>Krishna</span>Realty
+                        </a>
+                        <p style="max-width: 300px;">The most trusted premium real estate platform in the market.
+                            Redefining property experiences.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <div class="footer-links">
+                            <a href="#">About Us</a>
+                            <a href="#">Careers</a>
+                            <a href="#">Terms & Conditions</a>
+                            <a href="#">Privacy Policy</a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Properties</h4>
+                        <div class="footer-links">
+                            <a href="#">Buy Homes</a>
+                            <a href="#">Rent Homes</a>
+                            <a href="#">Commercial</a>
+                            <a href="#">New Projects</a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contact</h4>
+                        <div class="footer-links">
+                            <a href="#"><i class="fa-solid fa-phone"></i> +91 98765 43210</a>
+                            <a href="#"><i class="fa-solid fa-envelope"></i> hello@krishnarealty.com</a>
+                            <a href="#"><i class="fa-solid fa-location-dot"></i> 42 Business Park, Delhi</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Krishna Realty. All rights reserved. <a href="#" onclick="showAdminLogin(event)"
+                            style="opacity: 0.05; cursor: default; user-select: none;">-</a></p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Post Property Modal -->
+        <div class="modal-overlay" id="post-property-modal">
+            <div class="modal-content">
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                <h2 class="section-title" style="font-size: 2rem; margin-bottom: 0.5rem;">Post Your Property</h2>
+                <p class="section-subtitle">Reach verified buyers and tenants globally.</p>
+
+                <form id="post-property-form">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label class="form-label">I want to</label>
+                            <select class="form-control" id="prop-intent">
+                                <option>Sell</option>
+                                <option>Rent out</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Property Type</label>
+                            <select class="form-control" id="prop-type">
+                                <option>Apartment</option>
+                                <option>Independent House</option>
+                                <option>Villa</option>
+                                <option>Commercial</option>
+                                <option>Boys PG</option>
+                                <option>Girls PG</option>
+                                <option>Hotels</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Property Details (City, Locality)</label>
+                        <input type="text" class="form-control" id="prop-location" placeholder="e.g. Bandra West, Mumbai" required>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label class="form-label">Expected Price</label>
+                            <input type="number" class="form-control" id="prop-price" placeholder="₹" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Built Up Area (Sq.Ft)</label>
+                            <input type="number" class="form-control" id="prop-area" placeholder="e.g. 1500" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="prop-name" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="tel" class="form-control" id="prop-mobile" placeholder="+91 xxxxx xxxxx" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"
+                        style="width: 100%; padding: 1rem; margin-top: 1rem; font-size: 1.125rem;">
+                        Submit Property
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== USER LOGIN VIEW ==================== -->
+    <div id="user-login-view" style="display: none;">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <a href="#" class="login-logo" onclick="showMainView(event)">
+                        <i class="fa-solid fa-home" style="color: var(--brand-primary); margin-right: 0.5rem;"></i>
+                        <span>Krishna</span>Realty
+                    </a>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">Sign in to your account</p>
+                    <div id="user-login-error"
+                        style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; display: none;">Invalid
+                        credentials. Please try again.</div>
+                </div>
+
+                <form id="user-login-form">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="user-email" class="form-control" placeholder="example@email.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="user-password" class="form-control" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        Sign In <i class="fa-solid fa-arrow-right-to-bracket" style="margin-left: 0.5rem;"></i>
+                    </button>
+                    <a href="#" onclick="showMainView(event)" class="btn btn-secondary"
+                        style="width: 100%; margin-top: 1rem; text-align: center; display: block;">
+                        Return to Website
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== ADMIN LOGIN VIEW ==================== -->
+    <div id="admin-login-view" style="display: none;">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <a href="#" class="login-logo" onclick="showMainView(event)">
+                        <i class="fa-solid fa-shield-halved"
+                            style="color: var(--brand-primary); margin-right: 0.5rem;"></i>
+                        <span>Krishna</span>Admin
+                    </a>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">Sign in to access the control panel</p>
+                    <div id="admin-login-error"
+                        style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; display: none;">Invalid admin
+                        credentials.</div>
+                </div>
+
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label class="form-label">Admin Email</label>
+                        <input type="email" id="admin-email" class="form-control" placeholder="admin@krishnarealty.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="admin-password" class="form-control" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        Login as Admin
+                    </button>
+                    <a href="#" onclick="showMainView(event)" class="btn btn-secondary"
+                        style="width: 100%; margin-top: 1rem; text-align: center; display: block;">
+                        Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== ADMIN DASHBOARD VIEW ==================== -->
+    <div id="admin-dashboard-view" style="display: none;">
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar">
+                <div class="sidebar-header">
+                    <a href="#" class="login-logo" onclick="showMainView(event)"
+                        style="justify-content: flex-start; font-size: 1.5rem;">
+                        <i class="fa-solid fa-shield-halved"
+                            style="color: var(--brand-primary); margin-right: 0.5rem;"></i>
+                        <span>Krishna</span>Admin
+                    </a>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a href="#" class="sidebar-link active">
+                        <i class="fa-solid fa-chart-line" style="width: 20px;"></i> Dashboard
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-building" style="width: 20px;"></i> Properties
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-users" style="width: 20px;"></i> Users & Leads
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-gear" style="width: 20px;"></i> Settings
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button id="logout-btn" class="btn btn-secondary"
+                        style="width: 100%; border-color: transparent; background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="admin-main">
+                <div class="admin-header">
+                    <div>
+                        <h1 style="font-size: 1.75rem; margin-bottom: 0.25rem;">Overview</h1>
+                        <p style="color: var(--text-secondary);">Welcome back, Superadmin</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="theme-toggle" id="theme-toggle-admin" aria-label="Toggle Dark Mode">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                        <div
+                            style="width: 40px; height: 40px; border-radius: 50%; background: var(--brand-primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            A
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details Grid -->
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Listings</h3>
+                            <p id="stat-total">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green);">
+                            <i class="fa-solid fa-check-to-slot"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Active Sales</h3>
+                            <p id="stat-sales">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--accent-blue);">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Visits (7d)</h3>
+                            <p>12,450</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="data-card">
+                    <div class="data-header">
+                        <h2 style="font-size: 1.25rem;">Recent Property Listings</h2>
+                        <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">+ Add
+                            Property</button>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Property Details</th>
+                                    <th>Type / Status</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="property-table-body">
+                                <!-- JS Will Inject Data Here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts loaded at end (no module needed — works with file://) -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

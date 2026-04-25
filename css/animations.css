@@ -1,0 +1,73 @@
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Interactive element animations */
+.hover-float {
+  transition: transform 0.3s ease;
+}
+
+.hover-float:hover {
+  transform: translateY(-5px);
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Stagger Children */
+.stagger-children > * {
+  opacity: 0;
+}
+
+/* Add an active class toggled via JS */
+.stagger-children.active > *:nth-child(1) { animation: slideUp 0.6s ease forwards 100ms; }
+.stagger-children.active > *:nth-child(2) { animation: slideUp 0.6s ease forwards 200ms; }
+.stagger-children.active > *:nth-child(3) { animation: slideUp 0.6s ease forwards 300ms; }
+.stagger-children.active > *:nth-child(4) { animation: slideUp 0.6s ease forwards 400ms; }
+.stagger-children.active > *:nth-child(5) { animation: slideUp 0.6s ease forwards 500ms; }
+      
